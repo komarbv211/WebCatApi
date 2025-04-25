@@ -6,6 +6,7 @@ using global::WebCatApi.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using WebCatApi.Models.Seeder;
 
 
 namespace WebCatApi.Data

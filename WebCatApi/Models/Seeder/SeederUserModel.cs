@@ -1,4 +1,4 @@
-﻿namespace WebCatApi.Models
+﻿namespace WebCatApi.Models.Seeder
 {
     public class SeederUserModel
     {

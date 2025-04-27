@@ -16,7 +16,9 @@ namespace WebCatApi.Services
             var claims = new List<Claim>
         {
             new Claim("email", user.Email),
-            new Claim("name", $"{user.Lastname} {user.Firstname}")
+            new Claim("lastName", $"{user.Lastname}"),
+            new Claim("firstName", $"{user.Firstname}"),
+            new Claim("image", $"{user.Image}")
         };
             var roles = await userManager.GetRolesAsync(user);
 

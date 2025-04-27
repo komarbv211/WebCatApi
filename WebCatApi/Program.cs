@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using WebCatApi.Absrtact;
 using WebCatApi.Data;
 using WebCatApi.Data.Entities;
@@ -35,6 +36,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+var dir = Path.Combine(Directory.GetCurrentDirectory(), builder.Configuration.GetValue<string>("ImagesDir") ?? "uploading");
+
+Directory.CreateDirectory(dir);
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(dir),
+    RequestPath = "/images"
+});
 // Configure the HTTP request pipeline.
 // if (app.Environment.IsDevelopment())
 // {

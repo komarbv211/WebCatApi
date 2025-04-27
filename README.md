@@ -3,6 +3,8 @@
 Create docker hub repository - publish
 ```
 docker build -t web-cat-asp-api . 
+docker push komarandrii/web-cat-asp-api:latest
+
 docker run -it --rm -p 4531:8080 --name web-cat-asp_container web-cat-asp-api
 docker run -d --restart=always --name web-cat-asp_container -p 4531:8080 web-cat-asp-api
 docker run -d --restart=always -v d:/volumes/web-cat-asp/images:/app/uploading --name web-cat-asp_container -p 4531:8080 web-cat-asp-api

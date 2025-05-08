@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using WebCatApi.Data.Entities;
+using WebCatApi.Data.Entities.Identity;
 using WebCatApi.Models.Account;
 
 namespace WebCatApi.Mapper;

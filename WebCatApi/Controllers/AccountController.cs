@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using WebCatApi.Absrtact;
-using WebCatApi.Constans;
-using WebCatApi.Data.Entities;
+using WebCatApi.Abstract;
+using WebCatApi.Constants;
+using WebCatApi.Data.Entities.Identity;
 using WebCatApi.Models.Account;
 
 namespace WebCatApi.Controllers;

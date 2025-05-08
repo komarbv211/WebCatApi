@@ -132,7 +132,38 @@ namespace WebCatApi.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("WebCatApi.Data.Entities.RoleEntity", b =>
+            modelBuilder.Entity("WebCatApi.Data.Entities.CategoryEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(4000)
+                        .HasColumnType("character varying(4000)");
+
+                    b.Property<string>("Image")
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("tblCategories");
+                });
+
+            modelBuilder.Entity("WebCatApi.Data.Entities.Identity.RoleEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -161,7 +192,7 @@ namespace WebCatApi.Migrations
                     b.ToTable("AspNetRoles", (string)null);
                 });
 
-            modelBuilder.Entity("WebCatApi.Data.Entities.UserEntity", b =>
+            modelBuilder.Entity("WebCatApi.Data.Entities.Identity.UserEntity", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,7 +271,7 @@ namespace WebCatApi.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("WebCatApi.Data.Entities.UserRoleEntity", b =>
+            modelBuilder.Entity("WebCatApi.Data.Entities.Identity.UserRoleEntity", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUserRole<long>");
 
@@ -251,7 +282,7 @@ namespace WebCatApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<long>", b =>
                 {
-                    b.HasOne("WebCatApi.Data.Entities.RoleEntity", null)
+                    b.HasOne("WebCatApi.Data.Entities.Identity.RoleEntity", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -260,7 +291,7 @@ namespace WebCatApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<long>", b =>
                 {
-                    b.HasOne("WebCatApi.Data.Entities.UserEntity", null)
+                    b.HasOne("WebCatApi.Data.Entities.Identity.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -269,7 +300,7 @@ namespace WebCatApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<long>", b =>
                 {
-                    b.HasOne("WebCatApi.Data.Entities.UserEntity", null)
+                    b.HasOne("WebCatApi.Data.Entities.Identity.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -278,22 +309,33 @@ namespace WebCatApi.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<long>", b =>
                 {
-                    b.HasOne("WebCatApi.Data.Entities.UserEntity", null)
+                    b.HasOne("WebCatApi.Data.Entities.Identity.UserEntity", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("WebCatApi.Data.Entities.UserRoleEntity", b =>
+            modelBuilder.Entity("WebCatApi.Data.Entities.CategoryEntity", b =>
                 {
-                    b.HasOne("WebCatApi.Data.Entities.RoleEntity", "Role")
+                    b.HasOne("WebCatApi.Data.Entities.Identity.UserEntity", "User")
+                        .WithMany("Categories")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebCatApi.Data.Entities.Identity.UserRoleEntity", b =>
+                {
+                    b.HasOne("WebCatApi.Data.Entities.Identity.RoleEntity", "Role")
                         .WithMany("UserRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("WebCatApi.Data.Entities.UserEntity", "User")
+                    b.HasOne("WebCatApi.Data.Entities.Identity.UserEntity", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -304,13 +346,15 @@ namespace WebCatApi.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("WebCatApi.Data.Entities.RoleEntity", b =>
+            modelBuilder.Entity("WebCatApi.Data.Entities.Identity.RoleEntity", b =>
                 {
                     b.Navigation("UserRoles");
                 });
 
-            modelBuilder.Entity("WebCatApi.Data.Entities.UserEntity", b =>
+            modelBuilder.Entity("WebCatApi.Data.Entities.Identity.UserEntity", b =>
                 {
+                    b.Navigation("Categories");
+
                     b.Navigation("UserRoles");
                 });
 #pragma warning restore 612, 618
